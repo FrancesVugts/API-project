@@ -46,20 +46,20 @@ function fetchGitHubInformation(event) {
         return;
     }
 
-    // $("#gh-user-data").html(
-    //     `<div id="loader">
-    //         <img src="assets/css/loader.gif" alt="loading..." />
-    //     </div>`);
+    $("#gh-user-data").html(
+        `<div id="loader">
+            <img src="assets/css/loader.gif" alt="loading..." />
+        </div>`);
 
     $.when(
         $.getJSON(`https://api.github.com/users/${username}`),
-        // $.getJSON(`https://api.github.com/users/${username}/repos`)
+        $.getJSON(`https://api.github.com/users/${username}/repos`)
     ).then(
         function(firstResponse, secondResponse) {
-            var userData = firstResponse;
-            // var repoData = secondResponse[0];
+            var userData = firstResponse[0];
+            var repoData = secondResponse[0];
             $("#gh-user-data").html(userInformationHTML(userData));
-            // $("#gh-repo-data").html(repoInformationHTML(repoData));
+            $("#gh-repo-data").html(repoInformationHTML(repoData));
         },
         function(errorResponse) {
             if (errorResponse.status === 404) {
